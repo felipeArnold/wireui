@@ -1,6 +1,6 @@
 <?php
 
-namespace WireUi\Support\Form;
+namespace WireUi\Support;
 
 use Illuminate\Support\Str;
 
@@ -41,18 +41,24 @@ class WrapperData
     public static function extractable(): array
     {
         return [
+            'icon',
+            'color',
             'label',
             'corner',
-            'description',
             'prefix',
+            'shadow',
             'suffix',
-            'icon',
+            'rounded',
+            'errorless',
             'right-icon',
+            'shadowless',
+            'description',
             'invalidated',
             'with-validation-colors',
-            'errorless',
-            'borderless',
-            'shadowless',
+            // Classes
+            'color-classes',
+            'shadow-classes',
+            'rounded-classes',
         ];
     }
 }

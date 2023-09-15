@@ -3,12 +3,23 @@
 namespace WireUi\View\Components\Inputs;
 
 use Illuminate\Contracts\View\View;
-use Illuminate\View\Component;
-use WireUi\Traits\Components\IsFormComponent;
+use WireUi\Traits\Components\{HasSetupColor, HasSetupForm, HasSetupRounded, HasSetupShadow};
+use WireUi\View\Components\BaseComponent;
+use WireUi\WireUi\Wrapper\{Colors, Rounders, Shadows};
 
-class PasswordInput extends Component
+class PasswordInput extends BaseComponent
 {
-    use IsFormComponent;
+    use HasSetupColor;
+    use HasSetupForm;
+    use HasSetupRounded;
+    use HasSetupShadow;
+
+    public function __construct()
+    {
+        $this->setColorResolve(Colors::class);
+        $this->setShadowResolve(Shadows::class);
+        $this->setRoundedResolve(Rounders::class);
+    }
 
     public function blade(): View
     {

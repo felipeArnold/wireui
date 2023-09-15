@@ -1,14 +1,14 @@
 <div
-    class="
-        aria-disabled:pointer-events-none aria-disabled:select-none
-        aria-disabled:opacity-60 aria-disabled:cursor-not-allowed
-        aria-readonly:pointer-events-none aria-readonly:select-none
-    "
+    @class([
+        'aria-disabled:pointer-events-none aria-disabled:select-none',
+        'aria-disabled:opacity-60 aria-disabled:cursor-not-allowed',
+        'aria-readonly:pointer-events-none aria-readonly:select-none',
+    ])
     @attributes([
         'with-validation-colors' => $withValidationColors,
-        'group-invalidated'      => $invalidated,
-        'aria-disabled'          => $disabled,
-        'aria-readonly'          => $readonly,
+        'group-invalidated' => $invalidated,
+        'aria-disabled' => $disabled,
+        'aria-readonly' => $readonly,
     ])
     {{ $attributes
         ->merge(['form-wrapper' => $id ?: 'true'])
@@ -17,9 +17,9 @@
     @if ($label || $corner)
         <div
             @class([
+                'justify-between items-end' => $label,
+                'justify-end' => !$label,
                 'flex mb-1',
-                'justify-end'               => !$label,
-                'justify-between items-end' =>  $label,
             ])
             name="form.wrapper.header"
         >
@@ -48,9 +48,13 @@
             ->except(['wire:key', 'form-wrapper', 'x-data'])
             ->merge(['for' => $id])
             ->class([
-                'relative flex gap-x-2 items-center rounded-md shadow-sm',
+                Arr::get($roundedClasses, 'input', ''),
+                Arr::get($colorClasses, 'input', ''),
+                $shadowClasses => !$shadowless,
+
+                'focus-within:ring-2',
+                'relative flex gap-x-2 items-center',
                 'ring-1 ring-inset ring-gray-300',
-                'focus-within:ring-2 focus-within:ring-primary-600',
                 'transition-all ease-in-out duration-150',
 
                 'pl-3' => !isset($prepend),
@@ -67,11 +71,12 @@
         @if (!isset($prepend) && ($prefix || $icon))
             <div
                 name="form.wrapper.container.prefix"
-                class="
-                    text-gray-500 pointer-events-none select-none flex items-center whitespace-nowrap
-                    input-focus:text-primary-500 invalidated:input-focus:text-negative-500
-                    invalidated:text-negative-500
-                "
+                @class([
+                    'text-gray-500 pointer-events-none select-none flex items-center whitespace-nowrap',
+                    'invalidated:input-focus:text-negative-500',
+                    Arr::get($roundedClasses, 'prepend', ''),
+                    'invalidated:text-negative-500',
+                ])
             >
                 @if ($icon)
                     <x-dynamic-component
@@ -102,11 +107,12 @@
         @if (!isset($append))
             <div
                 name="form.wrapper.container.suffix"
-                class="
-                    text-gray-500 pointer-events-none select-none flex items-center whitespace-nowrap
-                    input-focus:text-primary-500 invalidated:input-focus:text-negative-500
-                    invalidated:text-negative-500
-                "
+                @class([
+                    'text-gray-500 pointer-events-none select-none flex items-center whitespace-nowrap',
+                    'invalidated:input-focus:text-negative-500',
+                    Arr::get($roundedClasses, 'append', ''),
+                    'invalidated:text-negative-500',
+                ])
             >
                 @if ($rightIcon)
                     <x-dynamic-component
